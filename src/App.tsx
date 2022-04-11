@@ -1,6 +1,6 @@
 import React, { useCallback, useReducer } from "react";
 import Row from "./Row";
-import { listReducer } from "./reduser";
+import { listReducer } from "./reducer";
 import "./App.css";
 
 export interface IDataRecord {
