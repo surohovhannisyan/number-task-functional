@@ -15,7 +15,6 @@ function App() {
       value: Math.round(100 + Math.random() * 900),
     })),
   });
-  console.log(listData);
 
   const handleUpdate = useCallback((index: number) => {
     dispatchListData({ type: "UPDATE_VALUE", index });
