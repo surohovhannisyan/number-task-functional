@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useRef } from "react";
+import React, { memo, useRef } from "react";
 
 import { IDataRecord } from "./App";
 
@@ -19,7 +19,9 @@ function Row({ data, index, onUpdate }: IRowProps) {
   };
 
   renderCount.current = renderCount.current + 1;
+
   console.log("rendered", label);
+
   return (
     <div>
       <span className="label">{label}:</span>

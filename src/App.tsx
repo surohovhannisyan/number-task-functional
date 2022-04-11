@@ -9,7 +9,7 @@ export interface IDataRecord {
 }
 
 function App() {
-  const [listData, dispatchListData] = React.useReducer(listReducer, {
+  const [listData, dispatchListData] = useReducer(listReducer, {
     list: Array.from({ length: 5 }, (_el, index) => ({
       label: `label ${index + 1}`,
       value: Math.round(100 + Math.random() * 900),
