@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useRef } from "react";
 
 import { IDataRecord } from "./App";
 
@@ -8,27 +8,23 @@ interface IRowProps {
   data: IDataRecord; // TODO
   index: number;
   onUpdate: (index: number) => void;
-  key: number;
 }
 
-function Row(props: IRowProps) {
-  const [renderCount, setRenderCount] = useState<number>(0);
-  const data = props.data;
+function Row({ data, index, onUpdate }: IRowProps) {
+  const renderCount = useRef(0);
+  const { label, value } = data;
 
   const handleClick = () => {
-    props.onUpdate(props.index);
+    onUpdate(index);
   };
 
-  useEffect(() => {
-    setRenderCount(renderCount + 1);
-  }, [props.data]);
-
+  renderCount.current = renderCount.current + 1;
+  console.log("rendered", label);
   return (
     <div>
-      <span className="label">{data.label}:</span>
-      <span>
-        {data.value}({renderCount})
-      </span>
+      <span className="label">{label}:</span>
+      <span>{value}</span>
+      <span>({renderCount.current})</span>
       <button className="button" onClick={handleClick}>
         Update
       </button>
@@ -36,4 +32,4 @@ function Row(props: IRowProps) {
   );
 }
 
-export default Row;
+export default memo(Row);

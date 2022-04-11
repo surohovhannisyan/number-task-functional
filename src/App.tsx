@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useReducer } from "react";
 import Row from "./Row";
+import { listReducer } from "./reduser";
 import "./App.css";
 
 export interface IDataRecord {
@@ -8,31 +9,23 @@ export interface IDataRecord {
 }
 
 function App() {
-  const [state, setState] = useState({
-    list: Array.from({ length: 200 }, (_el, index) => ({
+  const [listData, dispatchListData] = React.useReducer(listReducer, {
+    list: Array.from({ length: 5 }, (_el, index) => ({
       label: `label ${index + 1}`,
       value: Math.round(100 + Math.random() * 900),
     })),
   });
-  console.log(state);
+  console.log(listData);
 
-  const handleUpdate = (index: number) => {
-    setState((prevState) => {
-      const newList = prevState.list.map((item, i) => {
-        if (index === i) {
-          return { ...item, value: Math.round(100 + Math.random() * 900) };
-        }
-        return item;
-      });
-      return { ...prevState, list: newList };
-    });
-  };
+  const handleUpdate = useCallback((index: number) => {
+    dispatchListData({ type: "UPDATE_VALUE", index });
+  }, []);
 
   return (
     <div className="App">
       <h1>Test app</h1>
-      {state.list.map((el, index) => (
-        <Row data={el} index={index} key={index} onUpdate={handleUpdate} />
+      {listData.list.map((el, index) => (
+        <Row data={el} index={index} key={el.label} onUpdate={handleUpdate} />
       ))}
     </div>
   );
